@@ -5,95 +5,106 @@
  * @fileoverview This program keeps track of car stats.
  */
 
-// Function: oilChange
-function oilChange(mileage: number, lastOilChange: number): boolean {
-  if (mileage - lastOilChange >= 5000) {
+function oilChange(mileage: number, oilChangeKM: number): boolean {
+  // This function will check to see if your car needs an oil change and
+  // return the necessary responses, as well as update the variables.
+
+  if (mileage - oilChangeKM >= 5000) {
     console.log("An oil change was done.");
-    oilChangeKM = mileage;   // update last oil change
     return true;
   } else {
     return false;
   }
 }
 
-// Constants and Variables
-let odometer: number = 65000;       // mileage of Car
-let oilChangeKM: number = 65000;    // value since last oil change
-let carColor: string = "black";     // color of Car
-let carModel: string = "Civic";     // model of Car
-let carMake: string = "Honda";      // make of Car
-let newMileage: number = 0;         // new mileage amount
-let gasCost: number[] = new Array(10);  // cost of gas per fill-up
-let gasCount: number = 0;           // how many fill-ups stored
+// constants and variables
+let odometer: number = 0.0;       // mileage of Car
+let oilChangeKM: number = 0.0;    // value since the last oil change 
+let carColor: string = null;      // color of Car
+let carModel: string = null;      // model of Car
+let newMileage: number = 0.0;     // new mileage amount
+let gasCost: number[] = new Array(10); // cost of gas per fill up.
 
-// Function: carStats
-function carStats(): string {
-  let msg: string = "";
-  msg += "Car Make: " + carMake + "\n";
-  msg += "Car Model: " + carModel + "\n";
-  msg += "Car Color: " + carColor + "\n";
-  msg += "Odometer: " + odometer + " km\n";
-  return msg;
+// INITIAL SETUP BASED ON THE ASSIGNMENT
+carModel = "Used Car";
+carColor = "Silver";
+odometer = 65000;
+oilChangeKM = 65000;
+gasCost[0] = 74.0;   // first fill-up mentioned in the assignment
+
+// REQUIRED FUNCTIONS
+function carStats(
+  model: string,
+  color: string,
+  mileage: number,
+  lastOil: number,
+  gasArray: number[]
+): string {
+  return (
+    "\n--- CAR STATS ---" +
+    "\nModel: " + model +
+    "\nColor: " + color +
+    "\nOdometer: " + mileage + " km" +
+    "\nLast Oil Change: " + lastOil + " km" +
+    "\nGas Fill-Ups: " + gasArray.join(", ") +
+    "\n------------------\n"
+  );
 }
 
-// Function: wrapCar
 function wrapCar(): string {
-  const newColor: string = prompt("Enter a new colour: ") || carColor;
+  const newColor = prompt("Enter a new color to wrap your car:");
   return newColor;
 }
 
-// Function: drive
-function drive(): number {
-  const distance: number = Math.floor(Math.random() * (1000 - 100 + 1)) + 100;
-  newMileage = distance;
-  odometer += distance;
-  return distance;
+function drive(odometer: number): number {
+  const MIN = 100;
+  const MAX = 1000;
+
+  const km = Math.floor(Math.random() * (MAX - MIN + 1)) + MIN;
+  return km;
 }
 
-// Function: fillUp
-function fillUp(): void {
-  const cost: number = Number(prompt("How much did this fill-up cost? "));
-  gasCost[gasCount] = cost;
-  gasCount += 1;
+function fillUp(gasArray: number[], index: number): number {
+  const cost = Number(prompt("Enter the cost to fill up your car:"));
+  gasArray[index] = cost;
+  return cost;
 }
 
-// Function: displayCostToFillUp
-function displayCostToFillUp(): number {
-  let total: number = 0;
-  console.log("Gas fill-up costs:");
+function displayCostToFillUp(gasArray: number[]): number {
+  let sum = 0;
+  let count = 0;
 
-  let i: number = 0;
-  while (i < gasCount) {
-    console.log(gasCost[i]);
-    total += gasCost[i];
-    i += 1;
+  for (let i = 0; i < gasArray.length; i++) {
+    if (gasArray[i] > 0) {
+      console.log("Fill-up " + (i + 1) + ": $" + gasArray[i]);
+      sum += gasArray[i];
+      count++;
+    }
   }
 
-  const average: number = total / gasCount;
-  return average;
+  const avg = count > 0 ? sum / count : 0;
+  console.log("Average cost: $" + avg.toFixed(2));
+
+  return avg;
 }
 
-// MAIN PROGRAM
-console.log("Welcome to your Car Program!");
-console.log(carStats());
-
-// Test wrapCar
+// TEST FUNCTION CALLS
 carColor = wrapCar();
 
-// Test driving
-const miles: number = drive();
-console.log("You drove " + miles + " km.");
+newMileage = drive(odometer);
+console.log("\nYou drove " + newMileage + " km.");
+odometer += newMileage;
 
-// Test oil change
-if (!oilChange(odometer, oilChangeKM)) {
+fillUp(gasCost, 1);
+
+displayCostToFillUp(gasCost);
+
+if (oilChange(odometer, oilChangeKM)) {
+  oilChangeKM = odometer;
+} else {
   console.log("Your car does not need an oil change.");
 }
 
-// Test filling up
-fillUp();
-fillUp();
-
-const avg: number = displayCostToFillUp();
-console.log("Average cost = " + avg);
+console.log(carStats(carModel, carColor, odometer, oilChangeKM, gasCost));
 
 console.log("\nDone.");
