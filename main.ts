@@ -23,14 +23,14 @@ let oilChangeKM: number = 0.0;    // value since the last oil change
 let carColor: string = null;      // color of Car
 let carModel: string = null;      // model of Car
 let newMileage: number = 0.0;     // new mileage amount
-let gasCost: number[] = new Array(10); // cost of gas per fill up.
+const gasCost: number[] = new Array(10); // cost of gas per fill up.
 
 // INITIAL SETUP BASED ON THE ASSIGNMENT
 carModel = "Used Car";
 carColor = "Silver";
 odometer = 65000;
 oilChangeKM = 65000;
-gasCost[0] = 74.0;   // first fill-up mentioned in the assignment
+gasCost[0] = 74.0;   // first fill-up
 
 // REQUIRED FUNCTIONS
 function carStats(
@@ -56,7 +56,7 @@ function wrapCar(): string {
   return newColor;
 }
 
-function drive(odometer: number): number {
+function drive(): number {
   const MIN = 100;
   const MAX = 1000;
 
