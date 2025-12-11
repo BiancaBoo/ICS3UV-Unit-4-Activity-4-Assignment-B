@@ -18,19 +18,19 @@ function oilChange(mileage: number, oilChangeKM: number): boolean {
 }
 
 // constants and variables
-let odometer: number = 0.0;       // mileage of Car
-let oilChangeKM: number = 0.0;    // value since the last oil change 
-let carColor: string = null;      // color of Car
-let carModel: string = null;      // model of Car
-let newMileage: number = 0.0;     // new mileage amount
-const gasCost: number[] = new Array(10); // cost of gas per fill up.
+let odometer: number = 0.0;        // mileage of Car
+let oilChangeKM: number = 0.0;     // value since the last oil change
+let carColor: string = null;       // color of Car
+let carModel: string = null;       // model of Car
+let newMileage: number = 0.0;      // new mileage amount
+const gasCost: number[] = new Array(10); // cost of gas per fill up
 
 // INITIAL SETUP BASED ON THE ASSIGNMENT
 carModel = "Used Car";
 carColor = "Silver";
 odometer = 65000;
 oilChangeKM = 65000;
-gasCost[0] = 74.0;   // first fill-up
+gasCost[0] = 74.0; // first fill-up
 
 // REQUIRED FUNCTIONS
 function carStats(
@@ -59,7 +59,6 @@ function wrapCar(): string {
 function drive(): number {
   const MIN = 100;
   const MAX = 1000;
-
   const km = Math.floor(Math.random() * (MAX - MIN + 1)) + MIN;
   return km;
 }
@@ -91,7 +90,7 @@ function displayCostToFillUp(gasArray: number[]): number {
 // TEST FUNCTION CALLS
 carColor = wrapCar();
 
-newMileage = drive(odometer);
+newMileage = drive(); // FIXED: drive() takes no parameters
 console.log("\nYou drove " + newMileage + " km.");
 odometer += newMileage;
 
