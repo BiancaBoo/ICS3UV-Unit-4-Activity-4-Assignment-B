@@ -107,7 +107,6 @@ func main() {
 
 	// INITIAL VALUES
 	carModel = "Used Car"
-	carColor = "Silver"
 	odometer = 65000
 	lastOil = 65000
 	gasCost[0] = 74.0
